@@ -2,7 +2,7 @@ var express = require("express");
 var router = express.Router();
 var Usuario = require("../models/Usuario");
 
-// Retrieve all todos
+// Obtener todos los usuarios
 router.get("/", function(req, res) {
   Usuario.getAllUsers(function(err, rows) {
     if (err) {
@@ -13,7 +13,7 @@ router.get("/", function(req, res) {
   });
 });
 
-// Retrieve todo searching for username
+// Obtener un usuario por nombreUsuario
 router.get("/:nombreUsuario", function(req, res) {
   let nombreUsuario = req.params.nombreUsuario;
 
@@ -30,24 +30,7 @@ router.get("/:nombreUsuario", function(req, res) {
   });
 });
 
-// Search for usuarios by their name
-router.get("/search/:nombre", function(req, res) {
-  let nombre = req.params.nombre;
-  mc.query(
-    "SELECT * FROM Usuario WHERE nombre LIKE ? ",
-    ["%" + nombre + "%"],
-    function(error, results, fields) {
-      if (error) throw error;
-      return res.send({
-        error: false,
-        data: results,
-        message: "Usuario por nombre"
-      });
-    }
-  );
-});
-
-// Add a new user
+// Agregar un nuevo usuario
 router.post("/", function(req, res) {
   let nombre = req.body.nombre;
 
@@ -57,17 +40,50 @@ router.post("/", function(req, res) {
       .send({ error: true, message: "Nombre de usuario no encontrado" });
   }
 
-  mc.query("INSERT INTO Usuario SET ? ", { Usuario: usuario }, function(
-    error,
-    results,
-    fields
-  ) {
-    if (error) throw error;
-    return res.send({
-      error: false,
-      data: results,
-      message: "Agregar Usuario."
-    });
+  Usuario.addUser(req.body, function(err, rows) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(rows);
+    }
+  });
+});
+
+// Eliminiar un usuario
+router.delete("/", function(req, res) {
+  let nombreUsuario = req.body.nombreUsuario;
+
+  if (!nombreUsuario) {
+    return res
+      .status(400)
+      .send({ error: true, message: "Nombre de usuario no encontrado" });
+  }
+
+  Usuario.deleteUser(nombreUsuario, function(err, rows) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(rows);
+    }
+  });
+});
+
+// Actualizar un usuario
+router.put("/", function(req, res) {
+  let idUsuario = req.body.idUsuario;
+
+  if (!idUsuario) {
+    return res
+      .status(400)
+      .send({ error: true, message: "Nombre de usuario no encontrado" });
+  }
+
+  Usuario.updateUser(req.body, function(err, rows) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(rows);
+    }
   });
 });
 

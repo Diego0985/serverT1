@@ -15,7 +15,7 @@ var Usuario = {
 
   addUser: function(Usuario, callback) {
     return db.query(
-      "INSERT INTO Usuario(`nombre`, `apellido`, `fechaNacimiento`, `telefono`, `direccion`, `email`, `nombreUsuario`, `password`, `descripcion`, `esPasajero`, `esConductor`, `esAdministrador`, `foto`) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?,?)",
+      "INSERT INTO Usuario(`nombre`, `apellido`, `fechaNacimiento`, `telefono`, `direccion`, `email`, `nombreUsuario`, `password`, `descripcion`, `esPasajero`, `esConductor`, `esAdministrador`) VALUES  (?,?,?,?,?,?,?,?,?,?,?,?)",
       [
         Usuario.nombre,
         Usuario.apellido,
@@ -28,8 +28,7 @@ var Usuario = {
         Usuario.descripcion,
         Usuario.esPasajero,
         Usuario.esConductor,
-        Usuario.esAdministrador,
-        Usuario.foto
+        Usuario.esAdministrador
       ],
       callback
     );
@@ -45,7 +44,7 @@ var Usuario = {
 
   updateUser: function(Usuario, callback) {
     return db.query(
-      "UPDATE table SET `nombre` = ?, `apellido` = ?, `fechaNacimiento` = ?, `telefono` = ?, `direccion` = ?, `email` = ?, `password` = ?, `descripcion` = ?, `esPasajero` = ?, `esConductor` = ?, `esAdministrador` = ?, `foto` = ? WHERE `nombreUsuario` = ?",
+      "UPDATE Usuario SET `nombre` = ?, `apellido` = ?, `fechaNacimiento` = ?, `telefono` = ?, `direccion` = ?, `email` = ?, `password` = ?, `descripcion` = ?, `esPasajero` = ?, `esConductor` = ?, `esAdministrador` = ?, `foto` = ? WHERE `idUsuario` = ?",
       [
         Usuario.nombre,
         Usuario.apellido,
@@ -59,7 +58,7 @@ var Usuario = {
         Usuario.esConductor,
         Usuario.esAdministrador,
         Usuario.foto,
-        Usuario.nombreUsuario
+        Usuario.idUsuario
       ],
       callback
     );
