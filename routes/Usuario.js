@@ -13,7 +13,7 @@ router.get("/", function(req, res) {
   });
 });
 
-// Retrieve todo with id
+// Retrieve todo searching for username
 router.get("/:nombreUsuario", function(req, res) {
   let nombreUsuario = req.params.nombreUsuario;
 
