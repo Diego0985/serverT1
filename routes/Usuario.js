@@ -49,7 +49,7 @@ router.post("/", function(req, res) {
   });
 });
 
-// Eliminiar un usuario
+// Eliminar un usuario
 router.delete("/", function(req, res) {
   let nombreUsuario = req.body.nombreUsuario;
 
