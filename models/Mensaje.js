@@ -2,6 +2,7 @@ var db = require("../dbconnection"); //reference of dbconnection.js
 
 var Mensaje = {
 
+    /// Metodo para recuperar todos los mensajes
   getAllMessages: function(idUsuario, callback) {
     return db.query(
       "SELECT * FROM Mensaje where idUsuario=?",
@@ -10,7 +11,7 @@ var Mensaje = {
     );
   },
   
-  
+  /// Metodo para eliminar un mensaje especifico
   deleteMessage: function(idMensaje, callback) {
     return db.query(
       "DELETE FROM Mensaje WHERE idMensaje=?",
@@ -19,6 +20,7 @@ var Mensaje = {
     );
   },
 
+  //Metodo para eliminar todos los mensajes de un usuario
   deleteAllMessages: function(idUser, callback) {
     return db.query(
       "DELETE FROM Mensaje WHERE idUsuario=?",
@@ -27,7 +29,7 @@ var Mensaje = {
     );
   },
 
-
+  //Metodo para modificar el contenido de un mensaje
   updateUser: function(idMensaje, callback) {
     return db.query(
       "UPDATE table SET `contenido` = ?, WHERE `idMensaje` = ?",
