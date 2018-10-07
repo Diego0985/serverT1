@@ -2,9 +2,9 @@ var mysql = require("mysql");
 
 // connection configurations
 const connection = mysql.createPool({
-  host: "localhost",
+  host: "127.0.0.1",
   user: "root",
-  password: "mysql",
+  password: "password",
   database: "cumbaDB"
 });
 

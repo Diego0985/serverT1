@@ -10,7 +10,34 @@ var Mensaje = {
       callback
     );
   },
+
+
+  ///Metodo para recuperar un mensaje
+  getOneMessage: function(idMensaje, callback) {
+    return db.query(
+      "SELECT * FROM Mensaje where idMensaje=?",
+      idMensaje,
+      callback
+    );
+  },
   
+  //Insertar un mensaje
+  addUser: function(Mensaje, callback) {
+    return db.query(
+      "INSERT INTO Mensaje (`contenido`, `fecha`, `idUsuario`) VALUES (?, ?, ?)",
+      [
+        Mensaje.contenido,
+        Mensaje.fecha,
+        Mensaje.idUsuario,
+        
+      ],
+      callback
+    );
+  },
+
+
+
+
   /// Metodo para eliminar un mensaje especifico
   deleteMessage: function(idMensaje, callback) {
     return db.query(
@@ -20,8 +47,10 @@ var Mensaje = {
     );
   },
 
+
+
   //Metodo para eliminar todos los mensajes de un usuario
-  deleteAllMessages: function(idUser, callback) {
+  deleteAllUserMessages: function(idUser, callback) {
     return db.query(
       "DELETE FROM Mensaje WHERE idUsuario=?",
       [idUser],
@@ -29,19 +58,19 @@ var Mensaje = {
     );
   },
 
+
+  
   //Metodo para modificar el contenido de un mensaje
-  updateUser: function(idMensaje, callback) {
+  updateMessage: function(Mensaje, callback) {
     return db.query(
-      "UPDATE table SET `contenido` = ?, WHERE `idMensaje` = ?",
+      "UPDATE Mensaje SET `contenido` = ? WHERE `idMensaje` = ?",
       [
-        
         Mensaje.contenido,
         Mensaje.idMensaje,
-        
       ],
       callback
     );
   }
 };
 
-module.exports = Usuario;
+module.exports = Mensaje;
