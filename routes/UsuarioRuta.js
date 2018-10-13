@@ -41,17 +41,24 @@ router.get("/ruta/:idRuta", function(req, res) {
 });
 
 
-// Crear un nuevo mensaje
+// Crear un nuevo Usuario Ruta
 router.post("/", function(req, res) {
-  let idUsuarioRuta = req.body.idUsuarioRuta;
+  let idUsuario = req.body.idUsuario;
+  let idRuta = req.body.idRuta;
 
-  if (!idUsuarioRuta) {
+  if (!idUsuario) {
     return res
       .status(400)
       .send({ error: true, message: "Id de usuario no encontrado" });
   }
 
-  UsuarioRuta.addUser(req.body, function(err, rows) {
+  if (!idRuta) {
+    return res
+      .status(400)
+      .send({ error: true, message: "Id de usuario no encontrado" });
+  }
+
+  UsuarioRuta.addUserRoute(req.body, function(err, rows) {
     if (err) {
       res.json(err);
     } else {
@@ -61,6 +68,25 @@ router.post("/", function(req, res) {
 });
 
 
+
+//Borrar la relacion Usuario-Ruta.
+router.delete("/:idUsuarioRuta", function(req, res) {
+  let idUsuarioRuta = req.params.idUsuarioRuta;
+
+  if (!idUsuarioRuta) {
+    return res
+      .status(400)
+      .send({ error: true, message: "UsuarioRuta no encontrada" });
+  }
+
+  UsuarioRuta.deleteUserRoute(idUsuarioRuta, function(err, rows) {
+    if (err) {
+      res.json(err);
+    } else {
+      res.json(rows);
+    }
+  });
+});
 
 
 
