@@ -22,7 +22,7 @@ router.get("/usuario/:idUsuario", function(req, res) {
 });
 
 // Recuperar un solo mensaje
-router.get("/search/:idMensaje", function(req, res) {
+router.get("/:idMensaje", function(req, res) {
   let idMensaje = req.params.idMensaje;
 
   if (!idMensaje) {
@@ -49,7 +49,7 @@ router.post("/", function(req, res) {
         .send({ error: true, message: "Id de usuario no encontrado" });
     }
   
-    Mensaje.addUser(req.body, function(err, rows) {
+    Mensaje.addMessage(req.body, function(err, rows) {
       if (err) {
         res.json(err);
       } else {

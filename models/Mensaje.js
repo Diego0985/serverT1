@@ -22,7 +22,7 @@ var Mensaje = {
   },
   
   //Insertar un mensaje
-  addUser: function(Mensaje, callback) {
+  addMessage: function(Mensaje, callback) {
     return db.query(
       "INSERT INTO Mensaje (`contenido`, `fecha`, `idUsuario`) VALUES (?, ?, ?)",
       [

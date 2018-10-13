@@ -11,6 +11,7 @@ var Usuario = require("./routes/Usuario");
 var Vehiculo = require("./routes/Vehiculo");
 var Ruta = require("./routes/Ruta");
 var Mensaje = require("./routes/Mensaje");
+var UsuarioRuta = require("./routes/UsuarioRuta");
 var app = express();
 
 // view engine setup
@@ -35,6 +36,7 @@ app.use("/usuario", Usuario);
 app.use("/vehiculo", Vehiculo);
 app.use("/ruta", Ruta);
 app.use("/mensaje", Mensaje);
+app.use("/usuarioruta", UsuarioRuta);
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
   var err = new Error("Not Found");
