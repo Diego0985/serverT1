@@ -1,5 +1,3 @@
-﻿CREATE DATABASE  IF NOT EXISTS `cumbadb` /*!40100 DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci */;
-USE `cumbadb`;
 -- MySQL dump 10.13  Distrib 8.0.12, for Win64 (x86_64)
 --
 -- Host: 127.0.0.1    Database: cumbadb
@@ -27,11 +25,7 @@ DROP TABLE IF EXISTS `mensaje`;
 CREATE TABLE `mensaje` (
   `idMensaje` int(11) NOT NULL AUTO_INCREMENT,
   `contenido` varchar(120) NOT NULL,
-  `fecha` datetime NOT NULL,
-  `idUsuario` int(11) NOT NULL,
-  PRIMARY KEY (`idMensaje`),
-  KEY `fk_Mensaje_1_idx` (`idUsuario`),
-  CONSTRAINT `fk_Mensaje_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idusuario`) ON DELETE CASCADE
+  PRIMARY KEY (`idMensaje`)
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
@@ -41,7 +35,7 @@ CREATE TABLE `mensaje` (
 
 LOCK TABLES `mensaje` WRITE;
 /*!40000 ALTER TABLE `mensaje` DISABLE KEYS */;
-INSERT INTO `mensaje` VALUES (1,'Hola','2018-10-29 00:00:00',1),(2,'Como','2018-10-29 00:00:00',1),(3,'Estas','2018-10-29 00:00:00',1),(4,'Que','2018-10-30 00:00:00',2),(5,'mas','2018-10-29 00:00:00',2),(6,'perro','2018-10-29 00:00:00',2);
+INSERT INTO `mensaje` VALUES (1,'Hola'),(2,'Como'),(3,'Estas'),(4,'Que'),(5,'mas'),(6,'perro');
 /*!40000 ALTER TABLE `mensaje` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -66,6 +60,7 @@ CREATE TABLE `ruta` (
   `descripcion` varchar(250) DEFAULT NULL,
   `titulo` varchar(45) DEFAULT NULL,
   `numeroUsuarios` int(11) NOT NULL,
+  `rutaActiva` int(11) DEFAULT NULL,
   PRIMARY KEY (`idRuta`)
 ) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
 /*!40101 SET character_set_client = @saved_cs_client */;
@@ -76,37 +71,31 @@ CREATE TABLE `ruta` (
 
 LOCK TABLES `ruta` WRITE;
 /*!40000 ALTER TABLE `ruta` DISABLE KEYS */;
-INSERT INTO `ruta` VALUES (1,'Chilibulo','EPN','-0.233095','-78.533019','-0.210297 ','-78.488628','2018-10-12 00:00:00','2019-03-20 00:00:00',60,'Ruta Sin paradas','Chilibulo-EPN',4),(2,'Centro Historico','EPN','-0.225074 ','-78.512031','-0.210297 ','-78.488628','2018-09-20 00:00:00','2019-03-20 00:00:00',20,'Ruta con 1 parada en la Alameda','Centro-EPN',2),(3,'Carapungo','EPN','-0.107872 ','-78.447461','-0.210297 ','-78.488628','2018-11-15 00:00:00','2019-03-20 00:00:00',90,'Ruta sin paradas','Carapungo-EPN',4);
+INSERT INTO `ruta` VALUES (1,'Chilibulo','EPN','-0.233095','-78.533019','-0.210297 ','-78.488628','2018-10-12 00:00:00','2019-03-20 00:00:00',60,'Ruta Sin paradas','Chilibulo-EPN',4,NULL),(2,'Centro Historico','EPN','-0.225074 ','-78.512031','-0.210297 ','-78.488628','2018-09-20 00:00:00','2019-03-20 00:00:00',20,'Ruta con 1 parada en la Alameda','Centro-EPN',2,NULL),(3,'Carapungo','EPN','-0.107872 ','-78.447461','-0.210297 ','-78.488628','2018-11-15 00:00:00','2019-03-20 00:00:00',90,'Ruta sin paradas','Carapungo-EPN',4,NULL);
 /*!40000 ALTER TABLE `ruta` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
--- Table structure for table `sesion`
+-- Table structure for table `tipovehiculo`
 --
 
-DROP TABLE IF EXISTS `sesion`;
+DROP TABLE IF EXISTS `tipovehiculo`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
  SET character_set_client = utf8mb4 ;
-CREATE TABLE `sesion` (
-  `idSesion` int(11) NOT NULL AUTO_INCREMENT,
-  `idUsuario` int(11) NOT NULL,
-  `token` varchar(500) NOT NULL,
-  `identificadorDispositivo` int(11) NOT NULL,
-  `fechaFinConexion` varchar(250) NOT NULL,
-  PRIMARY KEY (`idSesion`),
-  KEY `fk_Sesion_1_idx` (`idUsuario`),
-  CONSTRAINT `fk_Sesion_1` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idusuario`) ON DELETE CASCADE
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+CREATE TABLE `tipovehiculo` (
+  `idTipoVehiculo` int(11) NOT NULL AUTO_INCREMENT,
+  `categoriaVehiculo` varchar(45) NOT NULL,
+  PRIMARY KEY (`idTipoVehiculo`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
--- Dumping data for table `sesion`
+-- Dumping data for table `tipovehiculo`
 --
 
-LOCK TABLES `sesion` WRITE;
-/*!40000 ALTER TABLE `sesion` DISABLE KEYS */;
-INSERT INTO `sesion` VALUES (1,1,'as',0,''),(2,2,'dc',0,''),(3,3,'fc',0,'');
-/*!40000 ALTER TABLE `sesion` ENABLE KEYS */;
+LOCK TABLES `tipovehiculo` WRITE;
+/*!40000 ALTER TABLE `tipovehiculo` DISABLE KEYS */;
+/*!40000 ALTER TABLE `tipovehiculo` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -145,6 +134,35 @@ INSERT INTO `usuario` VALUES (1,'Andres','Baus','1995-08-12 00:00:00','022 254-2
 UNLOCK TABLES;
 
 --
+-- Table structure for table `usuariomensaje`
+--
+
+DROP TABLE IF EXISTS `usuariomensaje`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+ SET character_set_client = utf8mb4 ;
+CREATE TABLE `usuariomensaje` (
+  `idUsuarioMensaje` int(11) NOT NULL AUTO_INCREMENT,
+  `idUsuario` int(11) NOT NULL,
+  `idMensaje` int(11) NOT NULL,
+  `fechaMensaje` datetime NOT NULL,
+  PRIMARY KEY (`idUsuarioMensaje`),
+  KEY `idMensaje_idx` (`idMensaje`),
+  KEY `idUsuario_idx` (`idUsuario`),
+  CONSTRAINT `idMensaje` FOREIGN KEY (`idMensaje`) REFERENCES `mensaje` (`idmensaje`),
+  CONSTRAINT `idUsuario` FOREIGN KEY (`idUsuario`) REFERENCES `usuario` (`idusuario`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `usuariomensaje`
+--
+
+LOCK TABLES `usuariomensaje` WRITE;
+/*!40000 ALTER TABLE `usuariomensaje` DISABLE KEYS */;
+/*!40000 ALTER TABLE `usuariomensaje` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `usuarioruta`
 --
 
@@ -155,7 +173,8 @@ CREATE TABLE `usuarioruta` (
   `idUsuarioRuta` int(11) NOT NULL AUTO_INCREMENT,
   `idUsuario` int(11) NOT NULL,
   `idRuta` int(11) NOT NULL,
-  `conductor` int(11) NOT NULL,
+  `esConductor` int(11) NOT NULL,
+  `fechaPublicacion` datetime DEFAULT NULL,
   PRIMARY KEY (`idUsuarioRuta`),
   KEY `fk_UsuarioRuta_1_idx` (`idUsuario`),
   KEY `fk_UsuarioRuta_2_idx` (`idRuta`),
@@ -170,7 +189,7 @@ CREATE TABLE `usuarioruta` (
 
 LOCK TABLES `usuarioruta` WRITE;
 /*!40000 ALTER TABLE `usuarioruta` DISABLE KEYS */;
-INSERT INTO `usuarioruta` VALUES (1,1,2,1),(2,2,3,1),(3,4,1,1),(4,3,2,0),(5,5,1,0),(6,3,1,0),(7,5,2,0);
+INSERT INTO `usuarioruta` VALUES (1,1,2,1,NULL),(2,2,3,1,NULL),(3,4,1,1,NULL),(4,3,2,0,NULL),(5,5,1,0,NULL),(6,3,1,0,NULL),(7,5,2,0,NULL);
 /*!40000 ALTER TABLE `usuarioruta` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -188,7 +207,6 @@ CREATE TABLE `vehiculo` (
   `marca` varchar(45) NOT NULL,
   `año` int(11) NOT NULL,
   `numeroAsientos` int(11) NOT NULL,
-  `tipo` varchar(45) NOT NULL,
   `idUsuario` int(11) NOT NULL,
   PRIMARY KEY (`idVehiculo`),
   KEY `fk_Vehículo_1_idx` (`idUsuario`),
@@ -202,7 +220,7 @@ CREATE TABLE `vehiculo` (
 
 LOCK TABLES `vehiculo` WRITE;
 /*!40000 ALTER TABLE `vehiculo` DISABLE KEYS */;
-INSERT INTO `vehiculo` VALUES (1,'AAB-0123	','3','Mazda',2018,5,'sedan',1),(2,'PEB-0001','Rio','Kia',2016,5,'sedan',2),(3,'GXA-0100','Uno','Fiat',1995,5,'hatchback',3);
+INSERT INTO `vehiculo` VALUES (1,'AAB-0123	','3','Mazda',2018,5,1),(2,'PEB-0001','Rio','Kia',2016,5,2),(3,'GXA-0100','Uno','Fiat',1995,5,3);
 /*!40000 ALTER TABLE `vehiculo` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -215,4 +233,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-20 14:19:08
+-- Dump completed on 2018-10-28 19:39:36
